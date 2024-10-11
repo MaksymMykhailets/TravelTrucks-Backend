@@ -4,6 +4,15 @@ export const getCampersController = async (req, res, next) => {
   try {
     const filters = req.query;
     const campers = await fetchCampers(filters);
+
+    if (!campers || campers.length === 0) {
+      return res.status(404).json({
+        status: 404,
+        message: 'No campers found with the specified filters',
+        data: [],
+      });
+    }
+
     res.json({
       status: 200,
       message: 'Successfully fetched campers',
